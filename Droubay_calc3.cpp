@@ -6,14 +6,15 @@ using namespace std;
 
 float num1, num2;
 char optr;
-string input;
+string equation_input;
+string keep_going_input;
 float answer = 0.0;
 char see_hist;
 string history = "";
 string equation;
 
 bool parseInput();
-//bool noMoreError();
+bool keepGoing();
 
 int main(void){
     //instructions for calc
@@ -24,7 +25,7 @@ int main(void){
     //infinite loop
     while(true){
         cout << "Enter your equation: \n";
-        getline(cin, input);
+        getline(cin, equation_input);
         
         if (parseInput()){
 
@@ -58,14 +59,33 @@ int main(void){
         
         equation = to_string(num1) + optr + to_string(num2) + " = " + to_string(answer) + ",\n";
         history = history + equation;
+
+        cout << "If you would like to Stop type S" << endl;
+        cout << "or or type any key to keep going" << endl;
+        getline(cin, keep_going_input);
+        if (keepGoing()){
+            if(keep_going_input == "S"){
+                break;}
+            else{continue;}
+        }
+        
+
     }
 }
 
 bool parseInput(){
-    istringstream iss(input);
+    istringstream iss(equation_input);
     if (iss >> num1 >> optr >> num2){
         return true;
     }
     else{
         return false;}
+}
+
+bool keepGoing(){
+    istringstream iss(keep_going_input);
+    if (iss >> keep_going_input){
+        return true;
+    }
+    return true;
 }
