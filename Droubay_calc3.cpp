@@ -10,14 +10,16 @@ string input;
 float answer = 0.0;
 char see_hist;
 string history = "";
+string equation;
 
 bool parseInput();
-bool noMoreError();
+//bool noMoreError();
 
 int main(void){
     //instructions for calc
     cout << endl << "Enter your problem like so: number, operator, number" << endl;
-    cout << "operators you can use include: + - * / ^\n\n";
+    cout << "operators you can use include: + - * / ^\n";
+    cout << "to view your history, type 0h0\n\n";
 
     //infinite loop
     while(true){
@@ -34,7 +36,7 @@ int main(void){
                 answer = num1 - num2;
                 cout << "= " + to_string(answer) << endl;}
             else if(optr == '*'){
-                answer - num1 * num2;
+                answer = num1 * num2;
                 cout << "= " + to_string(answer) << endl;}
             else if(optr == '/'){
                 answer = num1/num2;
@@ -42,6 +44,10 @@ int main(void){
             else if(optr == '^'){
                 answer = pow(num1,num2);
                 cout << "= " + to_string(answer) << endl;}
+            else if(optr == 'h'){
+                cout << history << endl;
+                continue;
+            }
             else{
                 cout << "Invalid equation" << endl;
                 continue;}
@@ -49,25 +55,9 @@ int main(void){
         else{
             cout << "Invalid equation" << endl;
             continue;}
-
-        //updates the history
-        string equation;
+        
         equation = to_string(num1) + optr + to_string(num2) + " = " + to_string(answer) + ",\n";
         history = history + equation;
-
-        //user wants to view history?
-        cout << endl << "Would you like to view your history? [Y,N]" << endl;
-        cin >> see_hist;
-
-        if(see_hist == 'Y' or see_hist == 'y'){
-            cout << history << endl;
-        }
-        
-        //Gets rid of automatic "Invalid equation"
-        getline(cin, input);
-        if noMoreError(){
-            continue;
-        }
     }
 }
 
@@ -78,10 +68,4 @@ bool parseInput(){
     }
     else{
         return false;}
-}
-
-
-bool noMoreError(){
-    istringstream iss(input);
-    return true;
 }
